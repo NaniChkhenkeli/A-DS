@@ -1,0 +1,27 @@
+class BitonicSort:
+    function compAndSwap(a, i, j, dir):
+        if (a[i] > a[j] and dir == 1) or (a[i] < a[j] and dir == 0):
+            swap(a, i, j)
+
+    function bitonicMerge(a, low, cnt, dir):
+        if cnt > 1:
+            k = cnt / 2
+            for i in range(low, low + k):
+                compAndSwap(a, i, i + k, dir)
+            bitonicMerge(a, low, k, dir)
+            bitonicMerge(a, low + k, k, dir)
+
+    function bitonicSort(a, low, cnt, dir):
+        if cnt > 1:
+            k = cnt / 2
+            bitonicSort(a, low, k, 1)
+            bitonicSort(a, low + k, k, 0)
+            bitonicMerge(a, low, cnt, dir)
+
+    function sort(a, N, up):
+        bitonicSort(a, 0, N, up)
+
+    function swap(a, i, j):
+        temp = a[i]
+        a[i] = a[j]
+        a[j] = temp
